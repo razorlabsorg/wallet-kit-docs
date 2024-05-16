@@ -19,10 +19,10 @@ Usually you won't need to import it because we hide it inside our ConnectButton.
 Here is an example for you to use with your own connect button.
 
 ```jsx
-import { useWallet, ConnectModal } from '@razorlabs/wallet-kit';
+import { useSuiWallet, ConnectModal } from '@razorlabs/wallet-kit';
 
 function App() {
-  const {connected} = useWallet()
+  const {connected} = useSuiWallet()
   const [showModal, setShowModal] = useState(false)
 
   if (connected) {

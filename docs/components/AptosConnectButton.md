@@ -1,46 +1,46 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-# ConnectButton
+# AptosConnectButton
 
 ## Description
 
-ConnectButton is the entry for users to connect their wallet.
+AptosConnectButton is the entry for users to connect their wallet.
 
 It manages the cycle of wallet connection, such as launching the wallet-select modal, displaying info of the account and showing the disconnect button when connected.
 
-We recommend using `ConnectButton` component to integrate Razor wallet kit 🥳 But you can customize your own ConnectButton with our api, check [#Use Hooks Only](/docs/tutorial/hooks-only) for details.
+We recommend using `AptosConnectButton` component to integrate Razor wallet kit 🥳 But you can customize your own AptosConnectButton with our api, check [#Use Hooks Only](/docs/tutorial/hooks-only) for details.
 
 ## Examples
 
 ### Basic Usage
 
 ```jsx
-import { ConnectButton, WalletProvider } from '@razorlabs/wallet-kit';
+import { AptosConnectButton, AptosWalletProvider } from '@razorlabs/wallet-kit';
 
 function App() {
   return (
-    <WalletProvider>
-      <ConnectButton>Connect Wallet</ConnectButton>
-    </WalletProvider>
+    <AptosWalletProvider>
+      <AptosConnectButton>Connect Wallet</AptosConnectButton>
+    </AptosWalletProvider>
   );
 }
 ```
 
 ### Handle Connection Events
 
-Sometimes you may want to hook in the connection events and do something with those. For example, provide friendly an error tip when the wallet connection fails. You can do it by passing a handle function to the property `onConnectError` of `ConnectButton`. The full APIs are listed [below](#props).
+Sometimes you may want to hook in the connection events and do something with those. For example, provide friendly an error tip when the wallet connection fails. You can do it by passing a handle function to the property `onConnectError` of `AptosConnectButton`. The full APIs are listed [below](#props).
 
 > If you are using hooks only, then simply wrap a try-catch block for the async `select` method!
 
 ```jsx
-import {WalletProvider, ConnectButton, ErrorCode, BaseError} from "@razorlabs/wallet-kit";
+import {AptosWalletProvider, AptosConnectButton, ErrorCode, BaseError} from "@razorlabs/wallet-kit";
 
 function App() {
   return (
-    <WalletProvider>
-      <ConnectButton
+    <AptosWalletProvider>
+      <AptosConnectButton
         // The BaseError instance has properties like {code, message, details}
         // for developers to further customize their error handling.
         onConnectError={(error: BaseError) => {
@@ -50,8 +50,8 @@ function App() {
              console.warn('unknown connect error: ', err);
            }
         }}
-      >Connect Wallet</ConnectButton>
-    </WalletProvider>
+      >Connect Wallet</AptosConnectButton>
+    </AptosWalletProvider>
   );
 }
 ```

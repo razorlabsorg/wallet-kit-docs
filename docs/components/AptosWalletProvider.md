@@ -1,16 +1,16 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# WalletProvider
+# AptosWalletProvider
 
 ## Description
 
-The `WalletProvider` provides the essential data and functions for our kit. And it is the entrypoint for customized configurations.
+The `AptosWalletProvider` provides the essential data and functions for our kit. And it is the entrypoint for customized configurations.
 
 :::tip
 
-So you need to wrap all the kit hooks and components under `WalletProvider` before you start to use them.
+So you need to wrap all the kit hooks and components under `AptosWalletProvider` before you start to use them.
 
 :::
 
@@ -20,13 +20,13 @@ So you need to wrap all the kit hooks and components under `WalletProvider` befo
 
 ```jsx
 import ReactDOM from 'react-dom';
-import { WalletProvider } from '@razorlabs/wallet-kit';
+import { AptosWalletProvider } from '@razorlabs/wallet-kit';
 
 function Root() {
   // wrap your app component
-  <WalletProvider>
+  <AptosWalletProvider>
     <App />
-  </WalletProvider>;
+  </AptosWalletProvider>;
 }
 
 ReactDOM.render(<Root />, docoument.getElementById('root'));
