@@ -1,17 +1,17 @@
 ---
 title: Configure supported chains (networks)
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 You can configure the supported chains (networks) for your dapp.
 
 ```tsx
 import {
-  WalletProvider,
+  SuiWalletProvider,
   Chain,
-  M2DevnetChain,
-  M2TestnetChain,
-  M2MainnetChain,
+  SuiDevnetChain,
+  SuiTestnetChain,
+  SuiMainnetChain,
   DefaultChains,
 } from '@razorlabs/wallet-kit';
 
@@ -33,9 +33,9 @@ const SupportedChains: Chain[] = [
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <WalletProvider chains={SupportedChains}>
+    <SuiWalletProvider chains={SupportedChains}>
       <App />
-    </WalletProvider>
+    </SuiWalletProvider>
   </React.StrictMode>
 );
 ```

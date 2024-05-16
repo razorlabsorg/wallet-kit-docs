@@ -1,6 +1,6 @@
 ---
 title: Connect your DApp with wallets on Movement
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 When do we consider a web application a DApp? It's when the web app leverages smart contracts to provide services for users. Wallet plays an important role in this interaction where it connects users with DApps. So before you start to build something amazing, you need to connect your dapp with wallets.

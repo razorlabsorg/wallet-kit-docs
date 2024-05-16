@@ -1,6 +1,6 @@
 ---
 title: Use Hooks Only (without UI)
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 This section will introduce how to only use the provided hooks.
@@ -9,33 +9,33 @@ It could be useful when you want to customize your UI components together with o
 
 ### Customize your UI components with Kit Hooks
 
-Firstly, add `WalletProvider` to wrap your App. The WalletProvider component provides the context of data and functions.
+Firstly, add `SuiWalletProvider` to wrap your App. The SuiWalletProvider component provides the context of data and functions.
 
-> For customizing the default wallet list, check [WalletProvider](/docs/components/WalletProvider#customize-your-wallet-list-on-modal)
+> For customizing the default wallet list, check [SuiWalletProvider](/docs/components/SuiWalletProvider#customize-your-wallet-list-on-modal)
 
 ```jsx
-import { WalletProvider } from '@razorlabs/wallet-kit';
+import { SuiWalletProvider } from '@razorlabs/wallet-kit';
 
 function RootComponent() {
   return (
-    <WalletProvider>
+    <SuiWalletProvider>
       <App />
-    </WalletProvider>
+    </SuiWalletProvider>
   );
 }
 ```
 
 Next, you are supposed to have **a connect button for wallet connection** and **a display area for account info after connection**.
 
-In this case, you can manage these two components by `connected` status from `useWallet` hook.
+In this case, you can manage these two components by `connected` status from `useSuiWallet` hook.
 And get active account address after connected.
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 import { useState, useEffect } from 'react';
 
 function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   return (
     <div>
@@ -51,10 +51,10 @@ function App() {
 
 For your wallet-select modal component, let's just call it WalletSelector.
 
-You can use `select` method from `useWallet` hook to connect the one of the SUI wallets.
+You can use `select` method from `useSuiWallet` hook to connect the one of the SUI wallets.
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 
 function WalletSelector() {
   const {
@@ -62,7 +62,7 @@ function WalletSelector() {
     configuredWallets, // default wallets
     detectedWallets, // Movement-standard wallets detected from browser env
     allAvailableWallets, // all the installed Movement-standard wallets
-  } = useWallet();
+  } = useSuiWallet();
 
   return [...configuredWallets, ...detectedWallets].map((wallet) => (
     <button
