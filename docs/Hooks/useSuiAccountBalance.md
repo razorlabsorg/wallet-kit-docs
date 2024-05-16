@@ -1,12 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
-# useAccountBalance
+# useSuiAccountBalance
 
 ## Introduction
 
-You can get the balance of the current account under the selected network. The useAccountBalance will return the current account's balance, loading status, error object. When fetching the banlance data, loading will set to true, otherwise false. If fetch failed, error will be an Error object instance and shows why fetch failed.
+You can get the balance of the current account under the selected network. The useSuiAccountBalance will return the current account's balance, loading status, error object. When fetching the banlance data, loading will set to true, otherwise false. If fetch failed, error will be an Error object instance and shows why fetch failed.
 
 :::tip
 If error is not null, it means fetch balance failed. In this case, the balance will set to be 0.
@@ -29,10 +29,10 @@ The `error` object tells why get balance failed. If error is not null, it may me
 The `loading` can be used to add loading when fetching acount balance.
 
 ```tsx
-import { useAccountBalance } from '@razorlabs/wallet';
+import { useSuiAccountBalance } from '@razorlabs/wallet-kit';
 
 function App() {
-  const { error, loading, balance } = useAccountBalance();
+  const { error, loading, balance } = useSuiAccountBalance();
 
   return (
     <div>{loading && <Spin />}</div>
@@ -58,10 +58,10 @@ interface AccountBalanceResponse {
   balance: string;
 }
 
-import { useAccountBalance } from '@razorlabs/wallet';
+import { useSuiAccountBalance } from '@razorlabs/wallet-kit';
 
 function App() {
-  const { error, loading, balance } = useAccountBalance();
+  const { error, loading, balance } = useSuiAccountBalance();
 
   useEffect(() => {
     // if you want to do comparison or calculation with balance,

@@ -1,12 +1,12 @@
 ---
-sidebar_position: 1
+sidebar_position: 6
 ---
 
-# useWallet
+# useSuiWallet
 
 ## Description
 
-`useWallet` is the most useful React Hook to play with. For details of React Hook, check
+`useSuiWallet` is the most useful React Hook to play with. For details of React Hook, check
 the [React doc](https://reactjs.org/docs/hooks-intro.html).
 
 It retrieves all the properties and functions from [WalletProvider](/docs/components/walletprovider), with which you can
@@ -25,10 +25,10 @@ Make sure it runs in a React component under `WalletProvider`
 We start with a simple senario like getting information from the connected wallet .
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 
 function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
   console.log('wallet status', wallet.status);
   console.log('connected wallet name', wallet.name);
   console.log('connected account info', wallet.account);
@@ -40,10 +40,10 @@ function App() {
 Here we define a `moveCall` transaction to implement a simple nft minting example.
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 
 function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   async function handleSignAndExecuteTxBlock() {
     if (!wallet.connected) return;
@@ -88,11 +88,11 @@ Here is an example for signing a simple message "Hello World".
 > use [TextEncoder](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) to encode and decode.
 
 ```tsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 import * as tweetnacl from 'tweetnacl';
 
 function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   async function handleSignMsg() {
     try {
@@ -147,11 +147,11 @@ In a nutshell, eliminating the need to switch network for dapp is a better user 
 :::
 
 ```tsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 import * as tweetnacl from 'tweetnacl';
 
 function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   useEffect(() => {
     if (!wallet.connected) return;
@@ -181,7 +181,7 @@ The connection status of wallet.
 | status     | 'disconnected' \| 'connecting' \| 'connected' | 'disconnected' |
 
 ```ts
-const { status, connected, connecting } = useWallet();
+const { status, connected, connecting } = useSuiWallet();
 
 // the assert expressions are equally the same
 assert(status === 'disconnected', !connecting && !connected); // not connect to wallet
@@ -198,7 +198,7 @@ The account info in the connected wallet, including address, publicKey etc.
 | [WalletAccount](/docs/Types#WalletAccount) | undefined |
 
 ```ts
-const { connected, account } = useWallet();
+const { connected, account } = useSuiWallet();
 
 function printAccountInfo() {
   if (!connected) return;
@@ -228,10 +228,10 @@ Get all the accessible accounts returned by wallet.
 The getAccounts will get the current wallet's account address. Now one wallet only have one account.
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 
 function YourComponent() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   function handleGetAccounts() {
     if (!wallet.connected) return;
@@ -264,7 +264,7 @@ Might not be synced with the wallet if the wallet doesn't support wallet-standar
 
 The adapter normalized from the raw adapter of the connected wallet. You can call all the properties and functions on
 it, which is followed
-the [@razorlabs/wallet-standard](https://github.com/MystenLabs/sui/tree/main/sdk/wallet-adapter/wallet-standard)
+the [@mysten/wallet-standard](https://github.com/MystenLabs/sui/tree/main/sdk/wallet-adapter/wallet-standard)
 
 | Type                                         | Default   |
 | -------------------------------------------- | --------- | --------- |
@@ -327,7 +327,7 @@ Deprecated, use [signAndExecuteTransactionBlock](#signandexecutetransactionblock
 Deprecated, use [adapter](#adapter) instead.
 
 ```diff
-const wallet = useWallet();
+const wallet = useSuiWallet();
 - console.log(wallet.wallet.name);
 + console.log(wallet.adapter.name);
 ```
@@ -337,7 +337,7 @@ const wallet = useWallet();
 Deprecated, use [account.publicKey](#account) instead.
 
 ```diff
-const wallet = useWallet();
+const wallet = useSuiWallet();
 - console.log(wallet.getPublicKey());
 + console.log(wallet.account.publicKey);
 ```
