@@ -31,26 +31,6 @@ Remember to handle exceptional cases if some wallet adapters do not support cert
 | [Sui Wallet](https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil) |               ✅               |         ✅          |  ✅   |        ❌         |
 |                              [Ethos Wallet](https://ethoswallet.xyz/)                               |               ✅               |         ✅          |  ❌   |        ❌         |
 
-## For Wallet Developers
-
-### How to integrate with Razor Wallet Kit?
-
-Please make sure your wallet supports the [@razorlabs/wallet-standard](https://github.com/razorlabsorg/wallet-standard) v0.1.1 and above.
-
-Specifically, in order to be auto-detected and recognized as a standard wallet on Movement by our kit,
-you need to implement the following features in your wallet adapter:
-
-```js
-// a valid wallet adapter should have the following features
-{
-  // ...
-  features: {
-    "standard:connect": () => {},
-    "standard:events": () => {},
-    "sui:signAndExecuteTransactionBlock": () => {},
-  }
-}
-```
 
 ### How to list my wallet on Razor Wallet Kit?
 

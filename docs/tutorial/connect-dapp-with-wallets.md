@@ -5,7 +5,7 @@ sidebar_position: 1
 
 When do we consider a web application a DApp? It's when the web app leverages smart contracts to provide services for users. Wallet plays an important role in this interaction where it connects users with DApps. So before you start to build something amazing, you need to connect your dapp with wallets.
 
-[Razor Wallet Kit](https://kit.razorwallet.xyz/) is an all-in-one wallet connection toolkit that follows the wallet standard of Movement for DApps. With out-of-the-box UI components and well-defined utility functions, you can easily empower your dapp with the ability to interact with wallets in an elegant way.
+[Razor Wallet Kit](https://kit.razorwallet.xyz/) is an all-in-one wallet connection toolkit for Movement DApps. With out-of-the-box UI components and well-defined utility functions, you can easily empower your dapp with the ability to interact with wallets in an elegant way.
 
 In this tutorial, You'll see how easy it could be to connect your dapp with all the wallets in the Movement ecosystem using Razor Wallet Kit.
 
@@ -19,27 +19,29 @@ In this tutorial, You'll see how easy it could be to connect your dapp with all 
 
 ## Getting started
 
-In this section, I am going to walk you through the installation and configuration for Razor wallet kit.
+In this section, We will walk you through the installation and configuration for Razor wallet kit.
 
 ### Installation
-
-Razor Wallet Kit is a decent wrapper for the official Typescript SDK `@mysten/sui.js` , which handles all the tedious details of wallet connection for you. Therefore, we need to install `@mysten/sui.js` along with the kit `@razorlabs/wallet-kit`.
 
 > For simplicity, we choose npm as the package manager, feel free to change to any alternatives.
 
 ```shell
 npm install @mysten/sui.js @razorlabs/wallet-kit
+# or
+npm install aptos @razorlabs/wallet-kit
 ```
+From the next part onwards, we are going to assume that that you're trying to Connect an M2
+App. If you're trying to follow this tutorial for an M1 app, just replace all instances of `Sui` with `Aptos`.
 
-### Setup WalletProvider for the App
+### Setup SuiWalletProvider for the App
 
-Next, let's import the `WalletProvider` and setup for your react project such that your App becomes available to access the states and functions provided by Razor Wallet Kit.
+Next, let's import the `SuiWalletProvider` and setup for your react project such that your App becomes available to access the states and functions provided by Razor Wallet Kit.
 
 ```jsx
 // src/index.js
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { WalletProvider } from '@razorlabs/wallet-kit';
+import { SuiWalletProvider } from '@razorlabs/wallet-kit';
 
 import App from './App';
 
@@ -49,9 +51,9 @@ const root = createRoot(rootElement);
 // wrap your app with WalletProvider
 root.render(
   <StrictMode>
-    <WalletProvider>
+    <SuiWalletProvider>
       <App />
-    </WalletProvider>
+    </SuiWalletProvider>
   </StrictMode>
 );
 ```
@@ -66,7 +68,7 @@ After the preparation above, we are ready to connect to wallets. Razor wallet ki
 
 When we click the Connect Button, it would provide a list of preset wallets for users to choose.
 
-Meanwhile, Razor wallet kit would automatically detect all the installed wallets that implement the Movement wallet standard in the browser. So If the wallet is not installed, the kit would guide users to download it from Chrome Extension Store. Take Razor wallet as an example:
+Meanwhile, Razor wallet kit would automatically detect all the installed wallets that implement the wallet standard in the browser. So If the wallet is not installed, the kit would guide users to download it from Chrome Extension Store. Take Razor wallet as an example:
 
 Let's move on. Now that the Razor wallet has been installed, the kit would initiate a connection request to the wallet extension.
 
@@ -74,9 +76,9 @@ Once user approves the request, the connection would be completed, which means w
 
 ## Use wallet capabilities
 
-It's time to take a look at the most useful hook [useWallet](https://kit.razorwallet.xyz/docs/Hooks/useWallet). It retrieves all the properties and functions from [WalletProvider](https://kit.razorwallet.xyz/docs/components/walletprovider), with which you can make use of the account properties and call functions to a connected wallet.
+It's time to take a look at the most useful hook [useSuiWallet](https://kit.razorwallet.xyz/docs/Hooks/useSuiWallet). It retrieves all the properties and functions from [SuiWalletProvider](https://kit.razorwallet.xyz/docs/components/Suiwalletprovider), with which you can make use of the account properties and call functions to a connected wallet.
 
-In the following sections, I will show you some basic usages with the hook `useWallet`.
+In the following sections, We will show you some basic usages with the hook `useSuiWallet`.
 
 ### Display info of the connected wallet
 
@@ -90,19 +92,19 @@ Firstly let's display the connection status for the debugging purpose.
 
 ```jsx
 import {
-  ConnectButton,
-  useWallet,
+  SuiConnectButton,
+  useSuiWallet,
   addressEllipsis,
 } from '@razorlabs/wallet-kit';
 
 export default function App() {
   // Get access to the connected wallet
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   return (
     <div className="App">
       <h1 className="title">Hello, Razor Wallet Kit</h1>
-      <ConnectButton />
+      <SuiConnectButton />
 
       <section>
         <p>
@@ -118,7 +120,7 @@ For account info, we usually cares about the address of an account (it's like an
 
 ```jsx
 export default function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   return (
     <div className="App">
@@ -134,13 +136,13 @@ export default function App() {
 }
 ```
 
-Note that the address of a Movement account is a 64-character hex string, but usually we only need to display the first and last a few characters, so that is where the util function `addressEllipsis` comes to play.
+Note that the address of an M2 account is a 64-character hex string, but usually we only need to display the first and last a few characters, so that is where the util function `addressEllipsis` comes to play.
 
 Lastly, we need to know which chain that the wallet is using, that is important if we want to make interactions with the correct environment of Movement blockchain. Let's type in these codes:
 
 ```jsx
 export default function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   return (
     <div className="App">
@@ -155,9 +157,9 @@ export default function App() {
 }
 ```
 
-There you go! So far you should be able to play with the all the properties provided by the hook `useWallet`. The full version of demo code can be found in the below codesandbox (filename: `01-useWallet.js`).
+There you go! So far you should be able to play with the all the properties provided by the hook `useSuiWallet`.
 
-> For more API references, please check out the documentation: https://kit.razorwallet.xyz/docs/Hooks/useWallet#api-references.
+> For more API references, please check out the documentation: https://kit.razorwallet.xyz/docs/Hooks/useSuiWallet#api-references.
 
 ### Execute a simple transaction
 
@@ -169,7 +171,7 @@ Again let's try this with a simple transaction, minting an NFT of Razor Logo.
 
 ![Gradient](/img/logo.png)
 
-Here is a smart contract for creating an NFT with custom name, description and img url, you can find the contract on [M2 explorer (devnet)](https://explorer-mvmt-m2.web.app/object/0x2f60e33e33a1c880e8749073c5ef89288cf4df8974d8b872dfd72bc6c58f1172?network=devnet)
+Here is a smart contract for creating an NFT with custom name, description and img url, you can find the contract on [M2 explorer (devnet)](https://explorer.sui.devnet.m2.movementlabs.xyz//object/0x2f60e33e33a1c880e8749073c5ef89288cf4df8974d8b872dfd72bc6c58f1172?network=devnet)
 
 ```move
 module 0x2f60e33e33a1c880e8749073c5ef89288cf4df8974d8b872dfd72bc6c58f1172::nft {
@@ -218,7 +220,7 @@ We've defined the smart contract target as well as the arguments, now it's time 
 Okay, get back to the code. Let's create an async function that creates and sends the transaction to the wallet for signing and execution.
 
 ```jsx
-import { useWallet } from '@razorlabs/wallet-kit';
+import { useSuiWallet } from '@razorlabs/wallet-kit';
 import { TransactionBlock } from '@mysten/sui.js';
 
 function createMintNftTxnBlock() {
@@ -226,7 +228,7 @@ function createMintNftTxnBlock() {
 }
 
 export default function App() {
-  const wallet = useWallet();
+  const wallet = useSuiWallet();
 
   async function mintNft() {
     if (!wallet.connected) return;
@@ -276,13 +278,13 @@ In fact, with Razor wallet kit, connecting to wallets is just a simple step. I w
   - [Configure supported chains (networks)](https://kit.razorwallet.xyz/docs/tutorial/configure-chain)
   - [Use Hooks Only (without UI)](https://kit.razorwallet.xyz/docs/tutorial/hooks-only)
 - Hooks
-  - [useWallet](https://kit.razorwallet.xyz/docs/Hooks/useWallet)
+  - [useSuiWallet](https://kit.razorwallet.xyz/docs/Hooks/useSuiWallet)
   - [useAccountBalance](https://kit.razorwallet.xyz/docs/Hooks/useAccountBalance)
   - [useSuiProvider](https://kit.razorwallet.xyz/docs/Hooks/useSuiprovider)
 - Styling
   - [Customize CSS and Theme](https://kit.razorwallet.xyz/docs/styling/customize)
 - Configuration and types
-  - [WalletProvider](https://kit.razorwallet.xyz/docs/components/WalletProvider#description)
+  - [SuiWalletProvider](https://kit.razorwallet.xyz/docs/components/SuiWalletProvider#description)
   - [Types](https://kit.razorwallet.xyz/docs/Types)
 
 ## The End

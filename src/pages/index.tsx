@@ -5,7 +5,7 @@ import React from 'react';
 
 import styles from './index.module.css';
 import { CustomFields } from '@site/types/customFields';
-import { SuiConnectButton, SuiWalletProvider } from '@razorlabs/wallet-kit';
+import { AptosConnectButton, AptosWalletProvider, SuiConnectButton, SuiWalletProvider } from '@razorlabs/wallet-kit';
 import '@razorlabs/wallet-kit/style.css';
 
 interface BadgeProps {
@@ -61,7 +61,18 @@ const HomepageHeader: React.FC = () => {
           <a className={styles['doc-button']} href="/docs/QuickStart">
             View Docs
           </a>
-          <SuiConnectButton>Try Connect Wallet</SuiConnectButton>
+          <div className={styles.container}>
+            <div className={styles.pagebutton}>
+              <AptosConnectButton>
+                Try M1
+              </AptosConnectButton>
+            </div>
+            <div className={styles.pagebutton}>
+              <SuiConnectButton>
+                Try M2
+              </SuiConnectButton>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -77,7 +88,9 @@ export default function Home(): JSX.Element {
       description="Razor wallet kit is the best way to connect wallets across the Movement Ecosystem"
     >
       <SuiWalletProvider autoConnect={false}>
-        <HomepageHeader />
+        <AptosWalletProvider autoConnect={false}>
+          <HomepageHeader />
+        </AptosWalletProvider>
       </SuiWalletProvider>
     </Layout>
   );
