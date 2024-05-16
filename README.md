@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ae914de9-818b-4491-8323-b703e0cd2521/deploy-status)](https://app.netlify.com/sites/razorwalletkit/deploys)
+
 # Website
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
