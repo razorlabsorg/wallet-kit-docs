@@ -55,9 +55,9 @@ import '@razorlabs/wallet-kit/style.css';
 
 // take react@18 project as an example
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <WalletProvider>
+  <SuiWalletProvider>
     <App />
-  </WalletProvider>
+  </SuiWalletProvider>
 );
 ```
 # or 
@@ -68,9 +68,9 @@ import '@razorlabs/wallet-kit/style.css';
 
 // take react@18 project as an example
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <WalletProvider>
+  <AptosWalletProvider>
     <App />
-  </WalletProvider>
+  </AptosWalletProvider>
 );
 ```
 
