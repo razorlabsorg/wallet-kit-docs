@@ -27,7 +27,7 @@ yarn add @razorlabs/wallet-kit
 pnpm install @razorlabs/wallet-kit
 ```
 
-Next, make sure `@mysten/sui.js` is installed in your project if your app is build on M2. For M1 builders make sure you have `aptos` installed. If not, install either one of them depending on the chain you're building on.
+Next, make sure `@mysten/sui.js` is installed in your project if your app is built on Sui Move. For Aptos Move apps, make sure you have `@aptos-labs/ts-sdk` installed. If not, install either one of them depending on the chain you're building on.
 
 ```shell
 npm install @mysten/sui.js
