@@ -6,35 +6,32 @@ sidebar_position: 2
 
 ## Introduction
 
-This hook is used to provide the Aptos `AptosClient` interface in React Hooks style.
+This hook is used to provide the Aptos `Aptos` interface in React Hooks style.
 
-See [`aptos` package on npm](https://www.npmjs.com/package/aptos) for more information.
+See [`aptos` package on npm](https://www.npmjs.com/package/@aptos-labs/ts-sdk) for more information.
 
 :::tip
-This hook is internally **JUST** importing the `AptosClient` interface and **implemention** from [`aptos` package](https://www.npmjs.com/package/aptos). What we do is caring about versioning, state management, and other stuffs for you.
+This hook is internally **JUST** importing the `Aptos` interface and **implemention** from [`@aptos-labs/ts-sdk` package](https://www.npmjs.com/package/@aptos-labs/ts-sdk). What we do is caring about versioning, state management, and other stuffs for you.
 :::
 
 ```jsx
 import { useAptosProvider } from '@razorlabs/wallet-kit';
 function YourComponent() {
-  const {
-    getObject,
-    getOwnedObjects,
-    getBalance,
-    // ... other methods
-  } = useAptosProvider();
+  const endpoint = 'https://aptos.devnet.m1.movementlabs.xyz';
+  const provider = useAptosProvider(endpoint);
 
   return <>...</>;
 }
 ```
 
-### Using the AptosClient interface
+### Using the Aptos interface
 
-But if you use the `AptosClient` provided by `useAptosProvider`, you can call the `signAndSubmitTransaction` RPC in a more convenient way:
+But if you use the `Aptos` provided by `useAptosProvider`, you can call the `signAndSubmitTransaction` endpoint in a more convenient way:
 
 ```jsx
 function YourComponent() {
-  const { signAndSubmitTransaction } = useAptosProvider();
+  const endpoint = 'https://aptos.devnet.m1.movementlabs.xyz';
+  const { signAndSubmitTransaction } = useAptosProvider(endpoint);
 
   return (
     <div
