@@ -290,7 +290,7 @@ The function is for message signing.
 
 This function is for verifying the output of `signPersonalMessage` following the Sui standard. Returns `true` if the returned signature matches the message to be signed and the signer's publicKey.
 
-For details please check [here](https://github.com/razorlabs/razor-wallet-sdk/blob/main/src/utils/verifySignedMessage.ts#L10)
+For details please check [here](https://github.com/razorlabsorg/razor-wallet-kit/blob/master/packages/m2-sdk/src/utils/verifySignedMessage.ts)
 
 | Type                                                                     | Default |
 | ------------------------------------------------------------------------ | ------- |

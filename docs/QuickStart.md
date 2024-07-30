@@ -11,7 +11,7 @@ Try out our kit and connect your dapp in just few seconds. 🪄
 
 > ⭐️ Have fun with [Demo Playground](https://kit-demo.razorwallet.xyz/)
 
-- [Example repo](https://github.com/razorlabs/wallet-kit-vite-example)
+- [Example repo](https://github.com/razorlabsorg/wallet-kit-vite-example)
 
 ## 🔨 Setup
 
