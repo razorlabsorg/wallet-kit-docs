@@ -27,25 +27,25 @@ yarn add @razorlabs/wallet-kit
 pnpm install @razorlabs/wallet-kit
 ```
 
-Next, make sure `@mysten/sui.js` is installed in your project if your app is built on Sui Move. For Aptos Move apps, make sure you have `@aptos-labs/ts-sdk` installed. If not, install either one of them depending on the chain you're building on.
+Next, make sure `@mysten/sui` is installed in your project if your app is built on Sui Move. For Aptos Move apps, make sure you have `@aptos-labs/ts-sdk` installed. If not, install either one of them depending on the chain you're building on.
 
 ```shell
-npm install @mysten/sui.js
+npm install @mysten/sui
 # or
-yarn add @mysten/sui.js
+yarn add @mysten/sui
 # or
-pnpm install @mysten/sui.js
+pnpm install @mysten/sui
 ```
 
 ```shell
-npm install aptos
+npm install @aptos-labs/ts-sdk
 # or
-yarn add aptos
+yarn add @aptos-labs/ts-sdk
 # or
-pnpm install aptos
+pnpm install @aptos-labs/ts-sdk
 ```
 
-Then wrap your `<App />` within one of our context providers, so that our hooks can work nicely inside your dapp. If your app is M1 based you should use `<AptosWalletProvider>`. If your App is M2 based you should use `<SuiWalletProvider>`. If your app supports both networks you can use both context providers. When using both providers, order of nesting doesn't matter.
+Then wrap your `<App />` within one of our context providers, so that our hooks can work nicely inside your dapp. If your app is Aptos based you should use `<AptosWalletProvider>`. If your App is Sui based you should use `<SuiWalletProvider>`. If your app supports both networks you can use both context providers. When using both providers, order of nesting doesn't matter.
 
 Oh don't forget to import our css to enable default styles 🎨
 
@@ -129,7 +129,7 @@ your dapp is already empowered and able to call wallet capabilities.🎉
 
 ```jsx
 import {useSuiWallet} from '@razorlabs/wallet-kit';
-import {TransactionBlock} from "@mysten/sui.js";
+import {Transaction} from "@mysten/sui";
 
 const App = () => {
   const wallet = useSuiWallet()
@@ -143,14 +143,14 @@ const App = () => {
 
   // launch a move call for the connected account via wallet
   async function handleMoveCall() {
-    const tx = new TransactionBlock();
+    const tx = new Transaction();
     const packageObjectId = "0x1";
     tx.moveCall({
       target: `${packageObjectId}::nft::mint`,
       arguments: [tx.pure("Example NFT")],
     });
-    await wallet.signAndExecuteTransactionBlock({
-      transactionBlock: tx,
+    await wallet.signAndExecuteTransaction({
+      transaction: tx,
     });
   }
 

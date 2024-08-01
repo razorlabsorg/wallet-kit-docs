@@ -41,15 +41,16 @@ Here we define a `moveCall` transaction to implement a simple nft minting exampl
 
 ```jsx
 import { useSuiWallet } from '@razorlabs/wallet-kit';
+import { Transaction } from '@mysten/sui';
 
 function App() {
   const wallet = useSuiWallet();
 
-  async function handleSignAndExecuteTxBlock() {
+  async function handleSignAndExecuteTx() {
     if (!wallet.connected) return;
 
     // define a programmable transaction
-    const tx = new TransactionBlock();
+    const tx = new Transaction();
     const packageObjectId = '0xXXX';
     tx.moveCall({
       target: `${packageObjectId}::nft::mint`,
@@ -58,8 +59,8 @@ function App() {
 
     try {
       // execute the programmable transaction
-      const resData = await wallet.signAndExecuteTransactionBlock({
-        transactionBlock: tx,
+      const resData = await wallet.signAndExecuteTransaction({
+        transaction: tx,
       });
       console.log('nft minted successfully!', resData);
       alert('Congrats! your nft is minted!');
@@ -270,13 +271,13 @@ the [@mysten/wallet-standard](https://github.com/MystenLabs/sui/tree/main/sdk/wa
 | -------------------------------------------- | --------- | --------- |
 | [IWalletAdapter](/docs/Types#iwalletadapter) | undefined | undefined |
 
-### signAndExecuteTransactionBlock
+### signAndExecuteTransaction
 
 The universal function to send and execute transactions via connected wallet.
 
 | Type                                                                                                                                                                                    | Default |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `({transactionBlock: TransactionBlock, requestType?: ExecuteTransactionRequestType, options?: SuiTransactionBlockResponseOptions}) => Promise<SuiSignAndExecuteTransactionBlockOutput>` |         |
+| `({transaction: Transaction, requestType?: ExecuteTransactionRequestType, options?: SuiTransactionBlockResponseOptions}) => Promise<SuiSignAndExecuteTransactionOutput>` |         |
 
 ### signPersonalMessage
 
@@ -314,13 +315,13 @@ All the wallet events:
 
 ## Deprecated API
 
-### signAndExecuteTransaction
+### signAndExecuteTransactionBlock
 
-Deprecated, use [signAndExecuteTransactionBlock](#signandexecutetransactionblock) instead.
+Deprecated, use [signAndExecuteTransaction](#signandexecutetransaction) instead.
 
 ### executeMoveCall and executeSerializedMoveCall
 
-Deprecated, use [signAndExecuteTransactionBlock](#signandexecutetransactionblock) instead.
+Deprecated, use [signAndExecuteTransaction](#signandexecutetransaction) instead.
 
 ### wallet
 

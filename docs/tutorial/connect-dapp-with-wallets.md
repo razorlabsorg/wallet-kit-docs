@@ -26,7 +26,7 @@ In this section, We will walk you through the installation and configuration for
 > For simplicity, we choose npm as the package manager, feel free to change to any alternatives.
 
 ```shell
-npm install @mysten/sui.js @razorlabs/wallet-kit
+npm install @mysten/sui @razorlabs/wallet-kit
 # or
 npm install aptos @razorlabs/wallet-kit
 ```
@@ -163,7 +163,7 @@ There you go! So far you should be able to play with the all the properties prov
 
 ### Execute a simple transaction
 
-Now we've come to the most interesting part: sending transactions. With Sui SDK `@mysten/sui.js`, we are able to use [Programmable Transaction](https://docs.sui.io/testnet/build/prog-trans-ts-sdk), one of Sui’s most powerful core developer primitives, to create any type of transactions to interact with smart contracts on Sui.
+Now we've come to the most interesting part: sending transactions. With Sui SDK `@mysten/sui`, we are able to use [Programmable Transaction](https://docs.sui.io/testnet/build/prog-trans-ts-sdk), one of Sui’s most powerful core developer primitives, to create any type of transactions to interact with smart contracts on Sui.
 
 > For more details of Programmable Transaction, please check out this Sui doc: https://docs.sui.io/testnet/build/prog-trans-ts-sdk.
 
@@ -189,7 +189,7 @@ entry public mint(Arg0: String, Arg1: String, Arg2: String, Arg3: &mut TxContext
 In order to call the mint function of this contract, we first create a function that returns a `TransactionBlock` using Sui TS SDK.
 
 ```jsx
-import { TransactionBlock } from '@mysten/sui.js';
+import { TransactionBlock } from '@mysten/sui';
 
 function createMintNftTxnBlock() {
   // define a programmable transaction block
@@ -221,9 +221,9 @@ Okay, get back to the code. Let's create an async function that creates and send
 
 ```jsx
 import { useSuiWallet } from '@razorlabs/wallet-kit';
-import { TransactionBlock } from '@mysten/sui.js';
+import { Transaction } from '@mysten/sui';
 
-function createMintNftTxnBlock() {
+function createMintNftTxn() {
   // ...
 }
 
@@ -233,11 +233,11 @@ export default function App() {
   async function mintNft() {
     if (!wallet.connected) return;
 
-    const txb = createMintNftTxnBlock();
+    const txb = createMintNftTxn();
     try {
       // call the wallet to sign and execute the transaction
-      const res = await wallet.signAndExecuteTransactionBlock({
-        transactionBlock: txb,
+      const res = await wallet.signAndExecuteTransaction({
+        transaction: txb,
       });
       console.log('nft minted successfully!', res);
       alert('Congrats! your nft is minted!');
@@ -259,7 +259,7 @@ export default function App() {
 }
 ```
 
-We've placed a button on the page which triggers the mintNft function, where it calls `wallet.signAndExecuteTransactionBlock` to invoke the connected wallet to sign and execute the transaction request.
+We've placed a button on the page which triggers the mintNft function, where it calls `wallet.signAndExecuteTransaction` to invoke the connected wallet to sign and execute the transaction request.
 
 Finally, let's take Razor wallet for testing. First open your Razor Wallet, change the network to `devnet`.
 

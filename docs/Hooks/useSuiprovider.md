@@ -8,14 +8,14 @@ sidebar_position: 5
 
 This hook is used to provide the Sui `SuiClient` interface in React Hooks style.
 
-See [`@mysten/sui.js` package on npm](https://www.npmjs.com/package/@mysten/sui.js) or [SuiClient](https://sdk.mystenlabs.com/typescript/sui-client) for more information.
+See [`@mysten/sui` package on npm](https://www.npmjs.com/package/@mysten/sui) or [SuiClient](https://sdk.mystenlabs.com/typescript/sui-client) for more information.
 
 :::tip
-This hook is internally **JUST** importing the `SuiClient` interface and **implemention** from [`@mysten/sui.js` package](https://www.npmjs.com/package/@mysten/sui.js). What we do is caring about versioning, state management, and other stuffs for you.
+This hook is internally **JUST** importing the `SuiClient` interface and **implemention** from [`@mysten/sui` package](https://www.npmjs.com/package/@mysten/sui). What we do is caring about versioning, state management, and other stuffs for you.
 :::
 
 ```jsx
-import { useSuiProvider } from '@razorlabs/wallet';
+import { useSuiProvider } from '@razorlabs/wallet-kit';
 const endpoint = 'https://sui.devnet.m2.movementlabs.xyz'
 function YourComponent() {
   const {
