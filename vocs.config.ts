@@ -13,7 +13,7 @@ export default defineConfig({
     pattern: 'https://github.com/razorlabsorg/wallet-kit-docs/edit/main/docs/:path',
     text: 'Suggest changes to this page'
   },
-  iconUrl: '/favicon.ico',
+  iconUrl: { light: '/favicon.png', dark: '/favicon.png' },
   logoUrl: { light: '/logo.png', dark: '/logo.png' },
   rootDir: '.',
   sidebar,
