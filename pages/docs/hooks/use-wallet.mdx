@@ -1,0 +1,273 @@
+# useWallet
+
+## Description
+
+`useWallet` is the most useful React Hook to play with. For more details on React Hooks, check
+the [React doc](https://reactjs.org/docs/hooks-intro.html).
+
+It retrieves all the properties and functions from [WalletProvider](/docs/components/wallet-provider), 
+with which you can get properties and call functions from a connected wallet.
+
+:::tip
+
+Make sure it runs in a React component that is wrapped by `WalletProvider`
+
+:::
+
+## Examples
+
+### Basic Usage
+
+We start with a simple scenario like getting information from the connected wallet .
+
+```tsx twoslash
+import React from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+function App() {
+  const wallet = useWallet();
+  console.log('wallet status', wallet.status);
+  console.log('connected wallet name', wallet.name);
+  console.log('connected account info', wallet.account);
+}
+```
+
+### Sign Transaction
+
+You can use the `signAndSubmitTransaction` function from `useWallet` to sign and submit 
+transactions in a more convenient way.
+
+```tsx twoslash
+import React from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+import { InputEntryFunctionData } from '@aptos-labs/ts-sdk';
+
+const YourComponent: React.FC = () => {
+  const { signAndSubmitTransaction } = useWallet();
+
+  const recipient = '0xbbe1cd791d6cb491634327215ce71eeddd77c4ea9d59e65aae467e54791b5c5d'
+
+  const payload: InputEntryFunctionData = {
+    function: '0x1::aptos_account::transfer',
+    functionArguments: [recipient, 100000000],
+    typeArguments: [],
+  };
+
+  return (
+    <button
+      onClick={async () => {
+        const resp = await signAndSubmitTransaction({
+          payload
+        });
+        // resp is the response from the Client, and has detailed typings definition
+      }}
+    >
+      Sign Transaction
+    </button>
+  );
+}
+```
+
+### Sign Message
+
+[Message signing](https://en.bitcoin.it/wiki/Message_signing#:~:text=Message%20signing%20is%20the%20action,they%20correspond%20to%20each%20other.)
+is an important action to **verify whether an approval is confirmed by the owner of an account**.
+
+Here is an example for signing a simple message "Hello World".
+
+```tsx twoslash
+import React from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+function App() {
+  const wallet = useWallet();
+
+  async function handleSignMsg() {
+    try {
+      const msg = 'Hello world!';
+
+      const result = await wallet.signMessage({
+        message: msg,
+        nonce: '1'
+      });
+      // verify signature with publicKey and SignedMessage (params are all included in result)
+      if (!result) {
+        console.log(
+          'signMessage succeed, but verify signedMessage failed'
+        );
+      } else {
+        console.log(
+          'signMessage succeed, and verify signedMessage succeed!'
+        );
+      }
+    } catch (e) {
+      console.error('signMessage failed', e);
+    }
+  }
+
+  return <button onClick={handleSignMsg}> Sign Message </button>;
+}
+```
+
+### Get the connected network of wallet
+
+:::warning
+
+Since this is not a standard feature, not all the wallet has implemented. Check 
+[Compatibility](/docs/compatibility) for further information.
+
+:::
+
+Your dapp can get the current connected chain of wallet.
+
+
+```tsx twoslash
+import React, { useEffect } from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+function App() {
+  const wallet = useWallet();
+
+  useEffect(() => {
+    if (!wallet.connected) return;
+    console.log('current connected network', wallet.chain?.name); // example 
+  }, [wallet.connected]);
+}
+```
+
+## API References
+
+### name
+
+The name of connected wallet.
+
+| Type                | Default   |
+| ------------------- | --------- |
+| string \| undefined | undefined |
+
+### connection status
+
+The connection status of wallet.
+
+| Properties | Type                                          | Default        |
+| ---------- | --------------------------------------------- | -------------- |
+| connecting | boolean                                       | false          |
+| connected  | boolean                                       | false          |
+| status     | 'disconnected' \| 'connecting' \| 'connected' | 'disconnected' |
+
+```ts
+const { status, connected, connecting } = useAptosWallet();
+
+// the assert expressions are equally the same
+assert(status === 'disconnected', !connecting && !connected); // not connect to wallet
+assert(status === 'connecting', connecting); // now connecting to the wallet
+assert(status === 'connected', connected); // connected to the wallet
+```
+
+### account
+
+The account info in the connected wallet, including address, publicKey etc.
+
+| Type                                       | Default   |
+| ------------------------------------------ | --------- |
+| [WalletAccount](/docs/misc/types#walletaccount) | undefined |
+
+```tsx twoslash
+import React from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+const { connected, account } = useWallet();
+
+function printAccountInfo() {
+  if (!connected) return;
+  console.log(account?.address);
+  console.log(account?.publicKey);
+}
+```
+
+### address
+
+Alias for `account.address`
+
+### select
+
+| Type                         | Default |
+| ---------------------------- | ------- |
+| (WalletName: string) => void |         |
+
+### getAccounts
+
+Get all the accessible accounts returned by wallet.
+
+| Type                      | Default |
+| ------------------------- | ------- |
+| `() => Promise<string[]>` |         |
+
+The getAccounts will get the current wallet's account address. Now one wallet only have one account.
+
+```tsx twoslash
+import React from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+function YourComponent() {
+  const wallet = useWallet();
+
+  function handleGetAccounts() {
+    if (!wallet.connected) return;
+    const accounts = wallet.getAccounts();
+    console.log(accounts);
+  }
+}
+```
+
+### chains
+
+Configuration of supported chains from WalletProvider
+
+| Type                          | Default                             |
+| ----------------------------- | ----------------------------------- |
+| [Chain](/docs/misc/types#chain)[] | [DefaultChains](/docs/misc/types#chain) |
+
+### chain
+
+Current connected chain of wallet.
+
+Might not be synced with the wallet if the wallet doesn't support wallet-standard "change" event.
+
+| Type   | Default                                                                                 |
+| ------ | --------------------------------------------------------------------------------------- |
+| string | the first value of configured [chains](/docs/misc/types#chain) or [UnknownChain](/docs/misc/types#chain) |
+
+### adapter
+
+The adapter normalized from the raw adapter of the connected wallet. You can call all the properties and functions on
+it, which is a complete implementation of the [@aptos-labs/wallet-standard](https://github.com/aptos-labs/wallet-standard)
+
+| Type                                         | Default   |
+| -------------------------------------------- | --------- |
+| [IWalletAdapter](/docs/misc/types#iwalletadapter) | undefined |
+
+### signAndSubmitTransaction
+
+The universal function to sign and submit transactions via connected wallet.
+
+| Type                                                                                                                                                                                    | Default |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `(input: { payload: InputEntryFunctionData }) => Promise<UserResponse<AptosSignAndSubmitTransactionOutput>>` |         |
+
+### signTransaction
+
+The universal function to sign transactions via connected wallet.
+
+| Type                                                                                                                                                                                    | Default |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `(input: { transaction: AnyRawTransaction, asFeePayer: boolean }) => Promise<UserResponse<AptosSignTransactionOutput>>` |         |
+
+### signMessage
+
+The function is for message signing.
+
+| Type                                                                            | Default |
+| ------------------------------------------------------------------------------- | ------- |
+| `(input: { message: string, nonce: string, chainId?: boolean, address?: boolean, application?: boolean }) => Promise<UserResponse<AptosSignMessageOutput>>` |         |
+
