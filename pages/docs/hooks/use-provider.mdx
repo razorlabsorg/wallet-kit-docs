@@ -1,0 +1,33 @@
+# useProvider
+
+## Introduction
+
+This hook is used to provide the `Aptos` client interface in React Hooks style.
+
+See [@aptos-labs/ts-sdk package on npm](https://www.npmjs.com/package/@aptos-labs/ts-sdk) for more information.
+
+:::info
+This hook is internally **JUST** importing the `Aptos` interface and **implementation** from [@aptos-labs/ts-sdk package](https://www.npmjs.com/package/@aptos-labs/ts-sdk). What we do is caring about versioning, state management, and other stuffs for you.
+:::
+
+```tsx twoslash
+import React from 'react';
+import { useProvider } from '@razorlabs/razorkit';
+function YourComponent() {
+  const rpcUrl = 'https://mainnet.movementnetwork.xyz/v1';
+  const provider = useProvider(rpcUrl);
+
+  return <>...</>;
+}
+```
+
+:::info
+You can optionally passing an indexerUrl argument to the `useProvider` hook if there is 
+one available.
+:::
+
+### Using the Aptos interface
+
+If you use the `Aptos` client interface provided by `useProvider`, 
+you can call the rpc methods in a more convenient way from your react app:
+

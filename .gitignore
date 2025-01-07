@@ -1,20 +1,33 @@
-# Dependencies
-/node_modules
-
-# Production
-/build
-
-# Generated files
-.docusaurus
-.cache-loader
-
-# Misc
+_cjs
+_esm
+_types
+*.local
 .DS_Store
+.attest
+.eslintcache
+.next
+bench
+cache
+coverage
+node_modules
+tsconfig*.tsbuildinfo
+wagmi
+src/node/trustedSetups_esm.ts
+**/trusted-setups/**/*.txt
+.idea
+
+# local env files
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.envrc
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# tests
+generated.ts
+vectors/**/*.json
+
+# docs
+site/dist
+.vercel

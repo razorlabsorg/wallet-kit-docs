@@ -1,0 +1,130 @@
+# Types
+
+## IDefaultWallet
+
+```tsx
+export interface IDefaultWallet {
+  name: string; // wallet name
+  iconUrl: string; // wallet icon url (external url or data url)
+  downloadUrl: {
+    browserExtension?: string; // provide download link if this wallet is not installed
+  };
+}
+```
+
+example for customized defaultWallet item:
+
+```tsx
+import IDefaultWallet from '@razorlabs/razorkit';
+
+const myWallet: IDefaultWallet = {
+  name: 'myWallet',
+  iconUrl: 'external url or data url',
+  downloadUrl: {
+    browserExtension: 'chrome extension store url...',
+  },
+};
+```
+
+## WalletAccount
+
+```tsx
+export interface WalletAccount {
+  /** Address of the account, corresponding with the public key. */
+  readonly address: string;
+
+  /** Public key of the account, corresponding with the secret key to sign, encrypt, or decrypt using. */
+  readonly publicKey: Uint8Array;
+
+  /** Chains supported by the account. */
+  readonly chains: IdentifierArray;
+
+  /** Features supported by the account. */
+  readonly features: IdentifierArray;
+
+  /** Optional user-friendly descriptive label or name for the account, to be displayed by apps. */
+  readonly label?: string;
+
+  /** Optional user-friendly icon for the account, to be displayed by apps. */
+  readonly icon?: WalletIcon;
+}
+```
+
+
+## IWalletAdapter
+https://github.com/razorlabsorg/razorkit/blob/master/packages/sdk/src/wallet-standard/interfaces/IWalletAdapter.ts
+
+## Chain
+
+Definition of chain's structure (aka Network for Razor Wallet)
+
+```tsx
+export type Chain = {
+  id: number;
+  name: string;
+  rpcUrl: string;
+  indexerUrl?: string;
+};
+```
+
+## Default constants:
+
+```tsx
+export const MovementPortoTestnetChain: Chain = {
+  id: 177,
+  name: 'Movement Porto Testnet',
+  rpcUrl: 'https://aptos.testnet.porto.movementlabs.xyz/v1',
+  indexerUrl: 'https://indexer.testnet.porto.movementnetwork.xyz/v1/graphql',
+};
+
+export const MovementBardockTestnetChain: Chain = {
+  id: 250,
+  name: 'Movement Bardock Testnet',
+  rpcUrl: 'https://aptos.testnet.bardock.movementlabs.xyz/v1',
+};
+
+export const MovementMainnetChain: Chain = {
+  id: 126,
+  name: 'Movement Mainnet',
+  rpcUrl: 'https://mainnet.movementnetwork.xyz/v1',
+  indexerUrl: 'https://rpc.sentio.xyz/movement-indexer/v1/graphql',
+};
+
+export const UnknownChain: Chain = {
+  id: 0,
+  name: 'Unknown Network',
+  rpcUrl: '',
+};
+
+export const DefaultChains = [MovementMainnetChain, MovementPortoTestnetChain, MovementBardockTestnetChain];
+```
+
+## Error Types
+
+```tsx
+type BaseError = {
+  message: string;
+  code: ErrorCode;
+  details?: Record<String, any>;
+};
+
+type KitError = BaseError; // errors from kit internal logics
+
+type WalletError = BaseError; // errors from third-party wallets
+```
+
+## Error Codes
+
+```tsx
+enum ErrorCode {
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+  KIT__UNKNOWN_ERROR = 'KIT.UNKNOWN_ERROR',
+  WALLET__UNKNOWN_ERROR = 'WALLET.UNKNOWN_ERROR',
+  WALLET__CONNECT_ERROR = 'WALLET.CONNECT_ERROR',
+  WALLET__DISCONNECT_ERROR = 'WALLET.DISCONNECT_ERROR',
+  WALLET__SIGN_TX_ERROR = 'WALLET.SIGN_TX_ERROR',
+  WALLET__SIGN_MSG_ERROR = 'WALLET.SIGN_MSG_ERROR',
+  WALLET__LISTEN_TO_EVENT_ERROR = 'WALLET.LISTEN_TO_EVENT_ERROR',
+  WALLET__METHOD_NOT_IMPLEMENTED_ERROR = 'WALLET.METHOD_NOT_IMPLEMENTED_ERROR',
+}
+```

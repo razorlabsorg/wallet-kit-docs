@@ -1,0 +1,62 @@
+# ConnectModal
+
+## Description
+
+`<ConnectModal />` is a nicely designed wallet-select modal for wallet selection.
+
+:::tip
+
+Usually you won't need to import it because it is already integrated within the 
+`<ConnectButton />` component. Unless you want to customize your own `<ConnectButton />` 
+along with our connect modal.
+
+:::
+
+## Examples
+
+Here is an example for you to use with your own connect button.
+
+```tsx twoslash
+import React, { useState } from 'react';
+import { useWallet, ConnectModal } from '@razorlabs/razorkit';
+
+const YourComponent: React.FC = () => {
+  return <div>Your Own Component</div>
+}
+
+const YourOwnButton: React.FC = () => {
+  return <button>Your Own Button</button>
+}
+
+function App() {
+  const { connected } = useWallet()
+  const [showModal, setShowModal] = useState(false)
+
+  if (connected) {
+    return <YourComponent />
+  }
+
+  return (
+    // wrap your own button as the trigger of the modal
+    <ConnectModal
+      open={showModal}
+      onOpenChange={(open) => setShowModal(open)}
+    >
+      <YourOwnButton />
+    </ConnectModal>
+  )
+}
+
+```
+
+## API
+
+### Props
+
+| Properties       | Description                        | Type                         | Default |
+| ---------------- | ---------------------------------- | ---------------------------- | ------- |
+| children         | trigger element for the modal      | ReactNode                    | null    |
+| open             | Indicator for opening the modal    | boolean                      | false   |
+| onOpenChange     | visibility change event            | (open: boolean) => void      | --      |
+| onConnectSuccess | Callback for successful connection | (walletName: string) => void |         |
+| onConnectError   | Callback for failed connection     | (error: BaseError) => void   |         |

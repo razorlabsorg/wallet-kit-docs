@@ -1,0 +1,120 @@
+# Customize Wallet List
+
+You can configure your wallet list on the select modal by passing `defaultWallets` through `<WalletProvider />`.
+
+We've prepared a set of [preset wallets](../compatibility#preset-wallets) that you can import 
+directly, also you can customize new wallet items. By default, we include all the preset wallets.
+
+## Default Usage
+
+:::tip
+
+All the `defaultWallets` will be listed in the Popular section on the wallet-select modal.
+
+:::
+
+```tsx twoslash
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  WalletProvider,
+  RazorWallet,
+  BitgetWallet,
+  NightlyWallet,
+  OkxWallet,
+  IDefaultWallet,
+} from '@razorlabs/razorkit';
+
+const App: React.FC = () => {
+  return <div>Hello World</div>;
+};
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <WalletProvider defaultWallets={[
+      // order defined by you
+      RazorWallet,
+      BitgetWallet,
+      NightlyWallet,
+      OkxWallet,
+      // ...
+    ]}>
+    {/* or just leave it as default which contains all preset wallets */}
+    {/*<WalletProvider>*/}
+      <App />
+    </WalletProvider>
+  </React.StrictMode>
+)
+```
+
+## Using Hook Only
+
+If you use `useWallet` hook only and have a customized wallet-select modal, then you can 
+access configured wallet list by `configuredWallets` from `useWallet`. Also we provide 
+`detectedWallets` for those wallets which are not pre-configured but detected from user browser.
+
+```tsx twoslash
+// make sure this code is wrapped in a <WalletProvider /> component
+import React from 'react';
+import { useWallet, IDefaultWallet } from '@razorlabs/razorkit';
+
+const CustomizedWalletModal = ({ list }: { list: IDefaultWallet[] }) => {
+  return (
+    <div>
+      {list.map((wallet) => (
+        <button key={wallet.name}>{wallet.name}</button>
+      ))}
+    </div>
+  );
+};
+
+function App() {
+  const { configuredWallets, detectedWallets } = useWallet();
+
+  return (
+    <>
+      <CustomizedWalletModal
+        list={[...configuredWallets, ...detectedWallets]}
+      />
+    </>
+  );
+}
+```
+
+## Define New Wallet
+
+If our wallet presets do not cover the wallets you need, you can simply define it using our `defineWallet` function.
+
+```tsx twoslash
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  WalletProvider,
+  defineWallet,
+} from '@razorlabs/razorkit';
+
+// customized wallet must support @mysten/wallet-standard
+const CustomizeWallet = defineWallet({
+  name: "myWallet",
+  label: "My Wallet",
+  iconUrl: "external url or data url",
+  downloadUrl: {
+    browserExtension: 'download page url of chrome extension...'
+  },
+})
+
+const App: React.FC = () => {
+  return <div>Hello World</div>;
+};
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <WalletProvider defaultWallets={[
+      CustomizeWallet,
+      // ...
+    ]}>
+      <App />
+    </WalletProvider>
+  </React.StrictMode>
+)
+```

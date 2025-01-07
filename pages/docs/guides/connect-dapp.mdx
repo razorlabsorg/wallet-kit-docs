@@ -1,0 +1,220 @@
+# Connect your DApp with wallets on Movement
+
+When do we consider a web application a DApp? It's when the web app leverages smart contracts 
+to provide services for users. A Wallet plays an important role in this interaction where it 
+connects users with DApps. So before you start to build something amazing, you need to 
+connect your dapp with wallets.
+
+[Razor Kit](https://kit.razorwallet.xyz/) is an all-in-one wallet connection toolkit for Movement DApps. With out-of-the-box UI components and well-defined utility functions, you can easily empower your dapp with the ability to interact with wallets in an elegant way.
+
+In this tutorial, You'll see how easy it is to connect your dapp with all the wallets in the Movement ecosystem using Razor Wallet Kit.
+
+:::info
+Razor Kit only supports React projects for now. However, if you would like to still 
+leverage the power of Razor Kit, you can use our [Wallet SDK](/docs/sdk/overview). The
+Wallet SDK is framework agnostic, so you can use it with any framework you like.
+:::
+
+
+## Learning Highlights
+
+- Install and configure Razor Kit for a React-based DApp
+- Connect the DApp with all the wallets on Movement
+- Use wallet capabilities (display wallet status and account info, send transactions etc)
+
+## Getting started
+
+In this section, We will walk you through the installation and configuration for Razor Kit.
+
+### Installation
+
+> For simplicity, we choose npm as the package manager, feel free to change to any alternatives.
+
+```shell
+npm install @razorlabs/razorkit
+```
+
+### Setup WalletProvider for the App
+
+Next, let's import the `WalletProvider` and setup for your react project such that your App becomes available to access the states and functions provided by Razor Kit.
+
+```tsx twoslash title="src/index.tsx"
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { WalletProvider } from '@razorlabs/razorkit';
+
+const App: React.FC = () => {
+  return <div>Hello World</div>;
+};
+
+const rootElement = document.getElementById('root')!;
+const root = createRoot(rootElement);
+
+// wrap your app with WalletProvider
+root.render(
+  <StrictMode>
+    <WalletProvider>
+      <App />
+    </WalletProvider>
+  </StrictMode>
+);
+```
+
+### Place ConnectButton
+
+In Razor Kit, we provide out-of-the-box UI components with good designs. What you need to do is just import and place the `ConnectButton` to wherever you like.
+
+## Connect to all the wallets on Movement
+
+After the preparation above, we are ready to connect to wallets. Razor Kit provides a list of 
+the most popular wallets in the Movement ecosystem. Users can choose their favorite one as 
+they wish.
+
+When we click the Connect Button, it would provide a list of preset wallets for users to choose.
+Meanwhile, Razor Kit would automatically detect all the installed wallets that implement the 
+wallet standard in the browser. So If the wallet is not installed, the kit would guide users 
+to download it from Chrome Extension Store. Take Razor Wallet as an example:
+
+Let's move on. Now that the Razor wallet has been installed, the kit would initiate a connection request to the wallet extension.
+Once user approves the request, the connection would be completed, which means we've successfully connected to a wallet!
+
+## Use wallet hooks
+
+It's time to take a look at the most useful hook [useWallet](/docs/hooks/use-wallet). It 
+retrieves all the properties and functions from [WalletProvider](/docs/components/wallet-provider), 
+with which you can make use of the account properties and call functions to a connected wallet.
+
+In the following sections, We will show you some basic usages with the hook `useWallet`.
+
+### Display info of the connected wallet
+
+We can get several useful information from the connected wallet via Razor Kit:
+
+- The wallet connection status
+- The account info
+- The current chain (network) that the wallet is using
+
+Firstly let's display the connection status for the debugging purpose.
+
+```tsx twoslash
+import React from 'react';
+import {
+  ConnectButton,
+  useWallet,
+  addressEllipsis,
+} from '@razorlabs/razorkit';
+
+export default function App() {
+  // Get access to the connected wallet
+  const wallet = useWallet();
+
+  return (
+    <div className="App">
+      <h1 className="title">Hello, Razor Kit</h1>
+      <ConnectButton />
+
+      <section>
+        <p>
+          <span className="gradient">Wallet status:</span> {wallet.status}
+        </p>
+      </section>
+    </div>
+  );
+}
+```
+
+For account info, we only care about the address of an account (it's like an ID in the 
+blockchain world!). With the address of the user account, your users can get started with interactions, 
+such as querying user on-chain assets, initiating a transaction request etc. But let's start 
+from the simplest thing: displaying the address of the account on the page.
+
+```tsx twoslash
+import React from 'react';
+import {
+  useWallet,
+  addressEllipsis,
+} from '@razorlabs/razorkit';
+
+export default function App() {
+  const wallet = useWallet();
+
+  return (
+    <div className="App">
+      // ...
+      {wallet?.account && (
+        <div>
+          <p>Connected Account: {addressEllipsis(wallet.account.address)}</p>
+        </div>
+      )}
+      // ...
+    </div>
+  );
+}
+```
+
+Note that the address of an Movement wallet is a 64-character hex string, but usually we only 
+need to display the first and last a few characters, so that is where the util function 
+`addressEllipsis` comes to play.
+
+Lastly, we need to know which chain the wallet is connected to, that is important if we want to 
+make interactions with the correct environment on Movement network. Let's type in these 
+codes:
+
+```tsx twoslash
+import React from 'react';
+import {
+  useWallet,
+} from '@razorlabs/razorkit';
+
+export default function App() {
+  const wallet = useWallet();
+
+  return (
+    <div className="App">
+      // ...
+      <p>
+        <span className="gradient">Current chain of wallet: </span>
+        {wallet.chain?.name}
+      </p>
+      // ...
+    </div>
+  );
+}
+```
+
+There you go! So far you should be able to play with the all the properties provided by the 
+hook `useWallet`.
+
+> For more API references, please check out the documentation: https://kit.razorwallet.xyz/docs/hooks/use-wallet#api-references.
+
+
+If you made this far, then congratulations! Your dapp is equipped with the power to interact with wallets and users. Don't hesitate, go and keep on making your dapp more interesting and powerful!
+
+## What's more
+
+In fact, with Razor Kit, connecting to wallets is just a simple step. Here is a list of topics that you might explore more:
+
+- Guides
+  - [Customize Wallet List](/docs/guides/customize-wallet-list)
+  - [Configure supported network (networks)](/docs/guides/configure-network)
+  - [Use Hooks Only (without UI)](/docs/guides/use-hooks-only)
+- Hooks
+  - [useWallet](/docs/hooks/use-wallet)
+  - [useAccountBalance](/docs/hooks/use-account-balance)
+  - [useProvider](/docs/hooks/use-provider)
+- Styling
+  - [Customize CSS and Theme](/docs/styling/customize)
+- Configuration and types
+  - [WalletProvider](/docs/components/wallet-provider#description)
+  - [Types](/docs/misc/types)
+
+## The End
+
+In this tutorial, we introduce how to install and make use of Razor Kit to empower your DApp 
+with the ability to connect to all the wallets on Movement and use wallet's capabilities such 
+as fetching user account's info and signing a transaction.
+
+If you find any issues or bugs, welcome to submit [issues](https://github.com/razorlabsorg/razorkit/issues) 
+or [PRs](https://github.com/razorlabsorg/razorkit/pulls) to [the Github repo](https://github.com/razorlabsorg/razorkit). 
+Let's make Movement and open-source community better together!
+

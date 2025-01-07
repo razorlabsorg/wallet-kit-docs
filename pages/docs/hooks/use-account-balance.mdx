@@ -1,0 +1,91 @@
+# useAccountBalance
+
+## Introduction
+
+You can get the balance of the current connected account under the selected network. 
+The useAccountBalance will return the current account's balance, loading status and error object. 
+When fetching the balance data, loading will set to true, otherwise false. If fetch failed, 
+error will be an Error object instance and shows why fetch failed.
+
+:::info
+If error is not null, it means fetch balance failed. In this case, the balance will set to be 0.
+:::
+
+## API
+
+| Properties | Description                                           | Type          | Default |
+| ---------- | ----------------------------------------------------- | ------------- | ------- |
+| error      | error or null                                         | Error \| null | null    |
+| loading    | fetch status                                          | boolean       | false   |
+| balance    | the balance of current account, converted from BigInt | string        | '0'     |
+
+### error
+
+The `error` object tells why get balance failed. If error is not null, 
+it may mean network error or other problems from your app.
+
+### loading
+
+The `loading` can be used to add loading when fetching acount balance.
+
+```tsx twoslash
+import React from 'react';
+import { useAccountBalance } from '@razorlabs/razorkit';
+
+const CustomSpinner: React.FC = () => {
+  return <div>Loading...</div>
+}
+
+function App() {
+  const { error, loading, balance } = useAccountBalance();
+
+  return (
+    <>
+      <div>
+        {loading && <CustomSpinner />}
+      </div>
+      <div>
+        {String(balance) ?? '0'}
+      </div>
+    </>
+  )
+}
+```
+
+### balance
+
+The balance's type is the default typescript`bigint`. 
+You can convert it to number or string(as shown in the example above) depending on your project.
+
+In some case, the balance can be bigger than Number.MAX_SAFE_INTEGER(2^53 - 1). 
+If your project supports Bigint(https://caniuse.com/?search=Bigint), you can directly use `BigInt` method to convert, otherwise, use some lib to work with bigint.
+
+## Example
+
+```tsx twoslash
+import React, { useEffect } from 'react';
+import { useAccountBalance } from '@razorlabs/razorkit';
+
+interface AccountBalanceResponse {
+  error: Error | null;
+  loading: boolean;
+  balance: string;
+}
+
+function App() {
+  const { error, loading, balance } = useAccountBalance();
+
+  useEffect(() => {
+    if (Number(balance) > 1000000) {
+      console.log('You are a millionaire!');
+    }
+  }, [balance]);
+
+  return (
+    <div>
+      <div>fetch balance loading status: {loading}</div>
+      <div>account balance: {String(balance) ?? '0'}</div>
+    </div>
+  );
+}
+```
