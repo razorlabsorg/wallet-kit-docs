@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vocs dev",
     "build": "vocs build",
+    "start": "pnpm run dev",
     "preview": "vocs preview",
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
   },
