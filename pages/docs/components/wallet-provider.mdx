@@ -1,0 +1,53 @@
+# WalletProvider
+
+## Description
+
+The `WalletProvider` context provider provides the essential data and functions for Razor Kit and 
+it is the entrypoint for customized configurations. So you need to wrap all the Razor Kit 
+hooks and components under  a `<WalletProvider />` component before you start to use them.
+
+:::info
+We recommend that you place the `<WalletProvider />` component at the root of your app.
+:::
+
+## Examples
+
+### Basic Usage
+
+```tsx twoslash
+import React from 'react'
+import ReactDOM from 'react-dom/client';
+import { WalletProvider } from '@razorlabs/razorkit';
+
+const App: React.FC = () => {
+  return (
+    <div>
+      Hello World!
+    </div>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <WalletProvider>
+    <App />
+  </WalletProvider>
+);
+```
+
+### Customize your wallet list on modal
+
+Check [Customize Wallet List](/docs/guides/customize-wallet-list) for details.
+
+### Configure supported networks
+
+Check [Configure supported networks](/docs/guides/configure-network) for details.
+
+## API
+
+### Props
+
+|      Prop      |                     Type                     |                      Default                       |                                Description                                |
+| :------------: | :------------------------------------------: | :------------------------------------------------: | :-----------------------------------------------------------------------: |
+| defaultWallets | [IDefaultWallet](/docs/misc/types#idefaultwallet) | [...[AllPresetWallets](/docs/compatibility#preset-wallets)] | Configure wallet list for dapp, by default we load all the preset wallets |
+|     chains     |         [Chain](/docs/misc/types#chain)[]         |         [DefaultChains](/docs/misc/types#default-constants)         |              Configure supported networks for dapp               |
+|  autoConnect   |                   boolean                    |                        true                        |          Auto connect to the last connected wallet when launched          |

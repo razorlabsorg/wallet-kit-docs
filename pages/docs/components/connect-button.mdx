@@ -1,0 +1,74 @@
+# ConnectButton
+
+## Description
+The `<ConnectButton />` component is the entry for users to connect their wallet.
+It manages the wallet connection cycle, such as launching the wallet-select modal, 
+displaying info of the connected account and showing the disconnect button when connected.
+
+We recommend using ConnectButton component to integrate Razor Kit. But you can customize 
+your own ConnectButton with our API, check [Use Hooks Only](/docs/guides/use-hooks-only) for details.
+
+## Examples
+### Basic Usage
+
+```tsx twoslash
+import React from 'react';
+import { ConnectButton, WalletProvider } from '@razorlabs/razorkit';
+
+function App() {
+  return (
+    <WalletProvider>
+      <ConnectButton>Connect Wallet</ConnectButton>
+    </WalletProvider>
+  );
+}
+```
+
+### Handle Connection Events
+Sometimes you may want to hook in the connection events and do something with those. 
+For example, provide a friendly error tip when the wallet connection fails. You can do 
+it by passing a handle function to the property onConnectError of ConnectButton. 
+The full APIs are listed at the bottom section of this page.
+
+If you are using hooks only, then simply wrap a try-catch block for the async select method!
+
+```tsx twoslash
+import React from 'react';
+import { WalletProvider, ConnectButton, ErrorCode, BaseError } from "@razorlabs/razorkit";
+
+function App() {
+  return (
+    <WalletProvider>
+      <ConnectButton
+        // The BaseError instance has properties like {code, message, details}
+        // for developers to further customize their error handling.
+        onConnectError={(err: BaseError) => {
+           if (err.code === ErrorCode.WALLET__CONNECT_ERROR__USER_REJECTED) {
+             console.warn('user rejected the connection to ' + err.details?.wallet);
+           } else {
+             console.warn('unknown connect error: ', err);
+           }
+        }}
+      >
+        Connect Wallet
+      </ConnectButton>
+    </WalletProvider>
+  );
+}
+```
+
+:::tip
+The error type is customized by Razor Kit. You may want to check [Error Types](/docs/types/#error-types) for details.
+:::
+
+## API
+### Props
+| Properties          | Description                           | Type                         | Default          |
+| ------------------- | ------------------------------------- | ---------------------------- | ---------------- |
+| children            | --                                    | ReactNode                    | 'Connect Wallet' |
+| style               | --                                    | React.CSSProperties          |                  |
+| className           | --                                    | string                       |                  |
+| onConnectSuccess    | Callback for successful connection    | (walletName: string) => void |                  |
+| onConnectError      | Callback for failed connection        | (error: BaseError) => void   |                  |
+| onDisconnectSuccess | Callback for successful disconnection | (walletName: string) => void |                  |
+| onDisconnectError   | Callback for failed disconnection     | (error: BaseError) => void   |                  |

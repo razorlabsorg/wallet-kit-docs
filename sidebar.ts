@@ -38,7 +38,7 @@ export const sidebar: Sidebar = {
     {
       text: 'Guides',
       items: [
-        { text: 'Configure Chain', link: '/docs/guides/configure-chain'},
+        { text: 'Configure Chain', link: '/docs/guides/configure-network'},
         { text: 'Connect Dapp', link: '/docs/guides/connect-dapp'},
         { text: 'Customize Wallet List', link: '/docs/guides/customize-wallet-list'},
         { text: 'Use Hooks Only', link: '/docs/guides/use-hooks-only' },
@@ -47,7 +47,7 @@ export const sidebar: Sidebar = {
     {
       text: 'Misc',
       items: [
-        { text: 'Types', link: '/docs/types' },
+        { text: 'Types', link: '/docs/misc/types' },
       ],
     },
   ],
