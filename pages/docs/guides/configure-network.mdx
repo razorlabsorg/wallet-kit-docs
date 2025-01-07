@@ -1,0 +1,44 @@
+# Configure supported networks
+
+You can configure the supported networks for your dapp.
+
+```tsx twoslash
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  WalletProvider,
+  Chain,
+  MovementMainnetChain,
+  MovementPortoTestnetChain,
+  MovementBardockTestnetChain,
+  DefaultChains,
+} from '@razorlabs/razorkit';
+
+const customChain: Chain = {
+  id: 1,
+  name: '',
+  rpcUrl: '',
+};
+
+const SupportedChains: Chain[] = [
+  // ...DefaultChains,
+  MovementMainnetChain,
+  MovementPortoTestnetChain,
+  MovementBardockTestnetChain,
+  // NOTE: you can add custom chain (network),
+  // but make sure the connected wallet does support it
+  // customChain,
+];
+
+const App: React.FC = () => {
+  return <div>Hello World</div>;
+};
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <WalletProvider chains={SupportedChains}>
+      <App />
+    </WalletProvider>
+  </React.StrictMode>
+)
+```
