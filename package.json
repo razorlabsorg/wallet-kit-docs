@@ -1,11 +1,12 @@
 {
   "name": "wallet-kit-docs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vocs dev",
     "build": "vocs build",
-    "preview": "vocs preview"
+    "preview": "vocs preview",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
   },
   "dependencies": {
     "@types/react": "latest",
@@ -15,8 +16,8 @@
     "vocs": "latest"
   },
   "devDependencies": {
-    "@razorlabs/razorkit": "^0.0.1",
+    "@razorlabs/razorkit": "^1.0.1",
     "@tanstack/react-query": "^5.54.1",
-    "wagmi": "^2.12.8"
+    "prettier": "^3.4.2"
   }
 }

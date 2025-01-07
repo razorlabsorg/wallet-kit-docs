@@ -23,21 +23,21 @@ import { HomePage } from 'vocs/components'
       <div className="flex flex-col justify-between w-[440px] space-y-10 max-lg:w-[300px] max-md:hidden">
         <div id="home-install" className="h-full">
 
-  :::code-group
+:::code-group
 
-  ```bash [npm]
-  npm i @razorlabs/razorkit
-  ```
+```bash [npm]
+npm i @razorlabs/razorkit
+```
 
-  ```bash [pnpm]
-  pnpm add @razorlabs/razorkit
-  ```
+```bash [pnpm]
+pnpm add @razorlabs/razorkit
+```
 
-  ```bash [yarn]
-  yarn add @razorlabs/razorkit
-  ```
+```bash [yarn]
+yarn add @razorlabs/razorkit
+```
 
-  :::
+:::
 
     </div>
     <div className="flex justify-between space-x-2">
@@ -47,7 +47,7 @@ import { HomePage } from 'vocs/components'
           <span className="font-medium text-[15px] opacity-80 leading-none w-full text-center">stars</span>
         </div>
         <div className="flex items-center h-full px-2">
-          <span className="font-medium text-[15px] text-center leading-none w-full text-black dark:text-white">2.3k</span>
+          <span className="font-medium text-[15px] text-center leading-none w-full text-black dark:text-white">4</span>
         </div>
       </div>
       <div className="absolute left-0 right-0 top-0 bottom-0 bg-black/5 dark:bg-white/5 z-0" />
@@ -124,54 +124,32 @@ import { HomePage } from 'vocs/components'
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
 <article className="vocs_Content max-w-3xl mt-[-80px] mx-auto">
 
 #
+
 # Overview
 
 ```tsx twoslash
-import React from 'react';
-import '@razorlabs/razorkit/styles.css';
-import {
-  ConnectButton,
-  getDefaultConfig,
-  RazorKitEthProvider,
-  mevmImola,
-} from '@razorlabs/razorkit';
-import { WagmiProvider } from 'wagmi';
-import {
-  QueryClientProvider,
-  QueryClient,
-} from "@tanstack/react-query";
-
-
-const config = getDefaultConfig({
-  appName: 'My Razor Kit App',
-  projectId: 'YOUR_PROJECT_ID',
-  chains: [mevmImola],
-  ssr: true, // If your dApp uses server side rendering (SSR)
-});
+import React from 'react'
+import '@razorlabs/razorkit/style.css'
+import { ConnectButton, WalletProvider } from '@razorlabs/razorkit'
 
 const YourApp = () => {
-  return <ConnectButton />;
-};
+  return <ConnectButton />
+}
 
-const queryClient = new QueryClient();
-
-const App = () => {
+const App: React.FC = () => {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RazorKitEthProvider>
-          <YourApp />
-        </RazorKitEthProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
-};
+    <WalletProvider autoConnect={true}>
+      <YourApp />
+    </WalletProvider>
+  )
+}
 ```
 
 # Features
@@ -182,9 +160,7 @@ Razor Kit supports all these features out-of-the-box:
 - Custom Themes
 - Built-in Themes
 - Custom Wallet Lists
-- Light and Dark modules
-- Support for all Movement Environments
-- App Store and Google Play Store Integration
+- Support for all Movement Wallets
 - Custom Connect Button
 
 # Community
@@ -195,6 +171,4 @@ Check out the following places for more razor-related content:
 - Join the [discussions on GitHub](https://github.com/razorlabsorg/razorkit/discussions)
 - [Share your project/organization](https://github.com/razorlabsorg/razorkit/discussions) that uses Razor Kit
 
-
 </article>
-
