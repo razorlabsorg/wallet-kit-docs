@@ -1,0 +1,130 @@
+# Getting Started [Get started with Razor Kit in just a few lines of code.]
+
+Razor wallet kit is a wallet aggregator for DApps to interact with all wallets on Movement easily. 🥳
+
+Try out our kit and connect your dapp in just few seconds. 🪄
+
+⭐️ Have fun with our [Demo Playground](https://kit-demo.razorwallet.xyz/)
+
+[Example repo](https://github.com/razorlabsorg/wallet-kit-vite-example)
+
+You can learn more about the rationale behind the project in the [Why Razor Kit](/docs/introduction) section.
+
+
+## 🔨 Setup
+First of all, let's install the npm package @razorlabs/razorkit to your project.
+
+:::code-group
+
+```bash [npm]
+npm i @razorlabs/razorkit
+```
+
+```bash [pnpm]
+pnpm add @razorlabs/razorkit
+```
+
+```bash [yarn]
+yarn add @razorlabs/razorkit
+```
+
+```bash [bun]
+bun add @razorlabs/razorkit
+```
+
+:::
+
+Then wrap your `<App />` within one of our context provider, so that our hooks can work nicely inside your dapp.
+
+Oh don't forget to import our css to enable default styles 🎨
+
+```tsx twoslash
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { WalletProvider } from '@razorlabs/razorkit';
+import '@razorlabs/razorkit/style.css';
+
+const App = () => {
+  return (
+    <div>
+      Hello World
+    </div>
+  )
+}
+
+// take react project as an example
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <WalletProvider>
+    <App />
+  </WalletProvider>
+);
+```
+
+By default, Razor Kit will load all the preset wallets to the list💡
+
+## 🕹 Place ConnectButton
+:::info
+We recommend to use hooks together with our components. But if you want to use our hooks 
+only with your customized UI components, follow the instructions in [Use Hooks Only](/docs/guides/use-hooks-only)
+:::
+
+Just import our `<ConnectButton />` and place it wherever you like, such as Navbar or Header sections.
+
+```tsx twoslash
+import React from 'react';
+import { ConnectButton } from '@razorlabs/razorkit';
+
+const App = () => {
+  return (
+    <>
+      <header>
+        <ConnectButton/>
+      </header>
+    </>
+  )
+};
+```
+
+## 🪝 Use Wallet Capabilities
+After your dapp connects to a supported wallet, your dapp is already supercharged and able 
+to call wallet capabilities.🎉
+
+Please explore the docs for further usage information 💡
+
+```tsx twoslash
+import React, { useEffect } from 'react';
+import { useWallet } from '@razorlabs/razorkit';
+
+const App = () => {
+  const wallet = useWallet()
+
+  useEffect(() => {
+    if (!wallet.connected) return;
+    console.log('connected wallet name: ', wallet.name)
+    console.log('account address: ', wallet.account?.address)
+    console.log('account publicKey: ', wallet.account?.publicKey)
+  }, [wallet.connected])
+
+  // launch a signMessage call for the connected account via wallet
+  async function handleSignMessage() {
+    await wallet.signMessage({
+      message: "Hello World",
+      nonce: '1',
+    });
+  }
+
+  return (
+    <div>
+      <button onClick={handleSignMessage}>Sign Message</button>
+    </div>
+  )
+};
+```
+
+Continue to BUIDL your amazing dapp and join the ongoing Movement!
+
+📚 More Guides
+Check out this section: [Guides](/docs/guides)
+
+💧 Demo Playground
+Feel free to play with our [Demo Playground](https://kit-demo.razorwallet.xyz/)

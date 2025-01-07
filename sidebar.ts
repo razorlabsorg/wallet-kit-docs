@@ -9,7 +9,12 @@ export const sidebar: Sidebar = {
         { text: 'Installation', link: '/docs/installation' },
         { text: 'Getting Started', link: '/docs/getting-started' },
         { text: 'Wallet Compatibility', link: '/docs/compatibility' },
-        { text: 'FAQ', link: '/docs/faq' },
+      ],
+    },
+    {
+      text: 'Guides',
+      items: [
+        { text: 'Use Hooks Only', link: '/docs/guides/use-hooks-only' },
       ],
     },
   ],

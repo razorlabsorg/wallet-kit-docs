@@ -1,0 +1,52 @@
+# Compatibility [Wallets compatible with Razor Kit]
+
+## Preset Wallets
+Razor Kit supports all [Aptos Wallet Standard](https://github.com/aptos-labs/wallet-standard) compatible wallets.
+However there are preset wallets. These preset wallets will be displayed as `Popular` on Razor Kit connection 
+modal by default.
+
+:::tip
+If you are a wallet developer and want to list your wallet below, feel free to contact our team 🥳 Twitter@RazorDAO
+:::
+
+
+Razor Wallet
+Nightly Wallet
+Bitget Wallet
+OKX Wallet
+
+
+## For Dapp Developers
+### How to list my wallet on Razor Kit?
+You can contact our team via Twitter@RazorDAO to list your wallet on Razor Kit.
+
+Or submit a PR to our repo, modify the following files:
+
+```tsx
+// packages/sdk/src/wallet/preset-wallets.ts
+export enum PresetWallet {
+  // ... registered wallet enum
+  // note that this name should match with your wallet adapter's name
+  // for auto detection and display purposes
+  YOUR_WALLET = 'Your Wallet',
+}
+
+export const YourWallet = defineWallet({
+  name: PresetWallet.YOUR_WALLET,
+  iconUrl:
+    'base64 encoded image (recommended, optimize the size!!) / external url',
+  downloadUrl: {
+    browserExtension: 'chrome extension installation url',
+  },
+});
+```
+
+```tsx
+// packages/sdk/src/wallet/AllDefaultWallets.ts
+export const AllDefaultWallets = [
+  ...[
+    // ... registered wallets
+    presets.YourWallet,
+  ].sort((a, b) => (a.name < b.name ? -1 : 1)),
+];
+```
