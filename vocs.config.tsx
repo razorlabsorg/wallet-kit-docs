@@ -12,7 +12,7 @@ export default defineConfig({
   description: 'An all-in-one Wallet kit for every Movement Dapp',
   editLink: {
     pattern:
-      'https://github.com/razorlabsorg/wallet-kit-docs/edit/main/docs/:path',
+      'https://github.com/razorlabsorg/wallet-kit-docs/edit/master/pages/:path',
     text: 'Suggest changes to this page',
   },
   iconUrl: { light: '/favicon.png', dark: '/favicon.png' },
@@ -49,7 +49,7 @@ export default defineConfig({
     { text: 'Docs', link: '/docs/getting-started', match: '/docs' },
     {
       text: 'Examples',
-      link: 'https://github.com/razorlabsorg/razorkit/tree/main/examples',
+      link: 'https://github.com/razorlabsorg/razorkit/tree/master/examples',
     },
     {
       text: pkg.version,
@@ -60,11 +60,11 @@ export default defineConfig({
         },
         {
           text: 'Changelog',
-          link: 'https://github.com/razorlabsorg/razorkit/blob/main/src/CHANGELOG.md',
+          link: 'https://github.com/razorlabsorg/razorkit/blob/master/CHANGELOG.md',
         },
         {
           text: 'Contributing',
-          link: 'https://github.com/razorlabsorg/razorkit/blob/main/.github/CONTRIBUTING.md',
+          link: 'https://github.com/razorlabsorg/razorkit/blob/master/.github/CONTRIBUTING.md',
         },
       ],
     },
