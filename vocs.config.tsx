@@ -6,7 +6,7 @@ export default defineConfig({
   title: 'Razor Kit Docs',
   baseUrl:
     process.env.NODE_ENV === 'production'
-      ? 'https://kit.razorwallet.kit'
+      ? 'https://kit.razorwallet.xyz'
       : 'http://localhost:5173',
   titleTemplate: '%s . Razor Kit',
   description: 'An all-in-one Wallet kit for every Movement Dapp',

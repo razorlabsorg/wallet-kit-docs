@@ -1,0 +1,29 @@
+# Migrating to v1.x.x
+
+Gmove developers, We are proud to announce the Release of RazorKit v1.0.1 🥳 This release 
+includes several exciting features, important improvements, and unfortunately, some 
+breaking changes as well 🥲 But don't worry, we have prepared a migration guide for 
+you and your dapp to upgrade to this version smoothly ❤️
+
+## What's New
+
+### New Package Name
+
+We've renamed the npm package from `@razorlabs/wallet-kit` to `@razorlabs/razorkit`. This is was done in order to
+help users differentiate between the RazorKit and others. We believe that being easily recognizable and unique
+is important for the success of RazorDAO as a brand. The most recent version (v.0.5.0) of the old package is still available
+under the name `@razorlabs/wallet-kit`, but we recommend that all existing users migrate to the new package name as the old one will be deprecated soon.
+
+### Chain Specific Language
+
+Initially, RazorKit was designed to be a chain agnostic wallet kit. However, many things have changed since that time
+and the Movement community has gravitated towards the AptosVM environment. As such, we deprecated support for Sui and
+removed all chain specific naming conventions since Razor Kit only supports a single environment now. For example,
+`useAptosWallet` is now `useWallet` and `<AptosWalletProvider>` is now `<WalletProvider>`. Developers need to take Note
+of this change when upgrading to the new version.
+
+### Wallet SDK export
+
+With this new release, RazorKit now exports all functions and methods from the Wallet SDK from the `@razorlabs/wallet-sdk` package. This means that
+developers who previously used both packages can now install only RazorKit and use the Wallet SDK functions directly.
+
