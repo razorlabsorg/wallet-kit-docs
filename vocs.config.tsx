@@ -52,7 +52,7 @@ export default defineConfig({
       link: 'https://github.com/razorlabsorg/razorkit/tree/master/examples',
     },
     {
-      text: pkg.version,
+      text: `v${pkg.version}`,
       items: [
         {
           text: `Migrating to ${toPatchVersionRange(pkg.version)}`,
