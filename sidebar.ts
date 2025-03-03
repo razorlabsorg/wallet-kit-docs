@@ -22,7 +22,11 @@ export const sidebar: Sidebar = {
     {
       text: 'Hooks',
       items: [
+        { text: 'useAbi', link: '/docs/hooks/use-abi'},
+        { text: 'useAccount', link: '/docs/hooks/use-account'},
         { text: 'useAccountBalance', link: '/docs/hooks/use-account-balance'},
+        { text: 'useChain', link: '/docs/hooks/use-chain'},
+        { text: 'useChainId', link: '/docs/hooks/use-chain-id'},
         { text: 'useProvider', link: '/docs/hooks/use-provider'},
         { text: 'useWallet', link: '/docs/hooks/use-wallet'},
       ]

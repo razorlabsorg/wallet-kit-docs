@@ -19,7 +19,7 @@
     "vocs": "1.0.0-alpha.58"
   },
   "devDependencies": {
-    "@razorlabs/razorkit": "^1.0.1",
+    "@razorlabs/razorkit": "^1.0.10",
     "prettier": "^3.4.2"
   }
 }

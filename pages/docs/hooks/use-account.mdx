@@ -1,0 +1,68 @@
+# useAccount
+
+The `useAccount` hook provides a convenient way to access the current wallet account information 
+and connection status. It combines data from the wallet adapter and chain configuration to give 
+you a unified interface for working with the connected account.
+
+## Usage
+
+```tsx twoslash
+import React from 'react'
+import { useAccount } from '@razorlabs/razorkit';
+
+function AccountInfo() {
+  const { 
+    address, 
+    isConnected, 
+    isConnecting, 
+    chain 
+  } = useAccount();
+  
+  if (isConnecting) {
+    return <div>Connecting...</div>;
+  }
+  
+  if (!isConnected) {
+    return <div>Not connected</div>;
+  }
+  
+  return (
+    <div>
+      <h2>Account Information</h2>
+      <p>Address: {address}</p>
+      <p>Network: {chain?.name}</p>
+    </div>
+  );
+}
+```
+
+## Return Value
+
+The `useAccount` hook returns an object with the following properties:
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `address` | `string \| undefined` | The address of the currently connected account |
+| `addresses` | `string[]` | Array of all account addresses available in the wallet |
+| `chain` | `Chain \| undefined` | The current chain configuration |
+| `chainId` | `string \| undefined` | The ID of the current chain |
+| `connector` | `WalletAdapter \| undefined` | The current wallet adapter instance |
+| `status` | `"connected" \| "connecting" \| "disconnected" \| "error"` | The current connection status |
+| `isConnected` | `boolean` | Whether the wallet is currently connected |
+| `isConnecting` | `boolean` | Whether the wallet is currently connecting |
+| `isDisconnected` | `boolean` | Whether the wallet is currently disconnected |
+| `reconnecting` | `boolean` | Whether the wallet is currently reconnecting |
+
+## Implementation Details
+
+The `useAccount` hook combines data from two other hooks:
+- [`useWallet`](/docs/hooks/use-wallet) - Provides wallet connection state and methods
+- [`useChain`](/docs/hooks/use-chain) - Provides information about the current blockchain network
+
+It also computes derived state like `isConnected`, `isConnecting`, and `isDisconnected` for convenience.
+
+## Related Hooks
+
+- [`useWallet`](/docs/hooks/use-wallet) - Access the wallet adapter directly
+- [`useChain`](/docs/hooks/use-chain) - Access the current chain configuration
+

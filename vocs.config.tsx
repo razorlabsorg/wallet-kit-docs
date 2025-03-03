@@ -3,6 +3,12 @@ import { sidebar } from './sidebar'
 import pkg from './package.json'
 
 export default defineConfig({
+  vite: {
+    server: {
+      port: 2090,
+      open: true,
+    },
+  },
   title: 'Razor Kit Docs',
   baseUrl:
     process.env.NODE_ENV === 'production'

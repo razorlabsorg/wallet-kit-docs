@@ -1,0 +1,55 @@
+# useAbi
+
+The `useAbi` hook allows you to fetch the ABI (Application Binary Interface) for a specific module on-chain. 
+This hook is useful when you need to interact with smart contracts and require their interface definitions.
+
+## Usage
+
+```tsx twoslash
+import React from 'react';
+import { useAbi } from '@razorlabs/razorkit';
+
+function MyComponent() {
+  // Fetch the ABI for a specific module
+  const abi = useAbi('0x1', 'coin');
+  
+  if (!abi) {
+    return <div>Loading ABI...</div>;
+  }
+  
+  return (
+    <div>
+      <h2>Module ABI</h2>
+      <pre>{JSON.stringify(abi, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+## Parameters
+
+The `useAbi` hook accepts two parameters:
+
+- `address` (string): The account address that owns the module.
+- `moduleName` (string): The name of the module to fetch the ABI for.
+
+## Return Value
+
+The hook returns the ABI of the specified module, or `undefined` if the data is still loading or an error occurred.
+
+## Implementation Details
+
+Under the hood, `useAbi` uses React Query to fetch and cache the ABI data. The hook:
+
+1. Gets the current chain configuration using the `useChain` hook
+2. Creates an Aptos client using the `useProvider` hook
+3. Fetches the module ABI using the Aptos client
+4. Caches the result with a query key based on the address and module name
+
+The hook will automatically retry failed requests up to 5 times and will only execute when both address and moduleName are provided.
+
+## Related Hooks
+
+- [`useChain`](/docs/hooks/use-chain) - Get the current chain configuration
+- [`useProvider`](/docs/hooks/use-provider) - Get an Aptos client instance
+
