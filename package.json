@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "vocs dev",
     "build": "vocs build",
-    "start": "pnpm run dev",
     "preview": "vocs preview",
+    "start": "serve dist",
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
+
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.33.1",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@razorlabs/razorkit": "^1.0.10",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "serve": "^14.2.0"
   }
 }

@@ -62,7 +62,7 @@ export default defineConfig({
       items: [
         {
           text: `Migrating to ${toPatchVersionRange(pkg.version)}`,
-          link: `/docs/migration-guide#_${toPatchVersionRange(pkg.version).replace(/\./g, '-')}-breaking-changes`,
+          link: `/docs/migration-guide#_${toPatchVersionRange(pkg.version).replaceAll('.', '-')}-breaking-changes`,
         },
         {
           text: 'Changelog',
